@@ -4,13 +4,18 @@ const taskForm = document.getElementById("taskForm");
 const taskList = document.getElementById("taskList");
 const taskCount = document.getElementById("taskCount");
 
-taskForm.addEventListener("submit", async function(event) {
+taskForm.addEventListener("submit", function(event) {
     event.preventDefault();
 
-    const title = document.getElementById("taskTitle").value;
-    const course = document.getElementById("course").value;
+    const title = document.getElementById("taskTitle").value.trim();
+    const course = document.getElementById("course").value.trim();
     const dueDate = document.getElementById("dueDate").value;
     const priority = document.getElementById("priority").value;
+
+    if (title === "" || course === "" || dueDate === "") {
+        alert("Please fill in all the required fields.");
+        return;
+    }
 
     const task = {
         title: title,
@@ -20,35 +25,14 @@ taskForm.addEventListener("submit", async function(event) {
         completed: false
     };
 
-    try {
-        const response = await fetch("tasks.php", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(task)
-        });
+    tasks.push(task);
 
-        const result = await response.json();
+    saveTasks();
+    displayTasks();
 
-        if (!response.ok || !result.success) {
-            alert(result.message || "Unable to add task.");
-            return;
-        }
+    taskForm.reset();
 
-        tasks.push(task);
-
-        saveTasks();
-        displayTasks();
-
-        taskForm.reset();
-
-        alert(result.message);
-
-    } catch (error) {
-        console.error("Error:", error);
-        alert("Could not connect to the PHP server.");
-    }
+    alert("Task added successfully!");
 });
 
 function saveTasks() {
@@ -61,14 +45,16 @@ function displayTasks() {
     tasks.forEach(function(task, index) {
         const listItem = document.createElement("li");
 
-        listItem.textContent =
+        const taskDetails = document.createElement("span");
+
+        taskDetails.textContent =
             task.title + " - " +
             task.course + " - Due: " +
             task.dueDate + " - Priority: " +
             task.priority + " ";
 
         if (task.completed) {
-            listItem.style.textDecoration = "line-through";
+            taskDetails.style.textDecoration = "line-through";
         }
 
         const completeButton = document.createElement("button");
@@ -93,6 +79,7 @@ function displayTasks() {
             displayTasks();
         });
 
+        listItem.appendChild(taskDetails);
         listItem.appendChild(completeButton);
         listItem.appendChild(deleteButton);
 
