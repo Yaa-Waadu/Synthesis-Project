@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Study Planner</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Student Study Planner</h1>
+        <p>Organize your assignments and stay on track!</p>
+    </header>
+
+    <main>
+
+        <section>
+            <h2>Add a New Task</h2>
+
+            <form id="taskForm">
+                <label for="taskTitle">Task Title:</label>
+                <input type="text" id="taskTitle" required>
+
+                <label for="course">Course Name:</label>
+                <input type="text" id="course" required>
+
+                <label for="dueDate">Due Date:</label>
+                <input type="date" id="dueDate" required>
+
+                <label for="priority">Priority:</label>
+                <select id="priority">
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                </select>
+
+                <button type="submit">Add Task</button>
+            </form>
+        </section>
+
+        <section>
+            <h2>My Tasks</h2>
+
+            <p id="taskCount">Total Tasks: 0</p>
+
+            <ul id="taskList">
+                <li>No tasks added yet.</li>
+            </ul>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Student Study Planner | Web Technology Project</p>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
